@@ -1,1 +1,18 @@
 
+import unittest
+import requests
+import json
+
+class TestAPI(unittest.TestCase):
+    
+    def test_kamren_city(self):
+        response = requests.get("https://jsonplaceholder.typicode.com/users")
+        self.assertEqual(response.status_code, 200)
+
+        users = response.json()
+        kamren = next((user for user in users if user['username'] == 'Kamren'), None)
+        self.assertIsNotNone(kamren, "User with username 'Kamren' not found")
+        self.assertEqual(kamren['address']['city'], 'Roscoeview', "User 'Kamren' does not live in 'Roscoeview'")
+
+if __name__ == "__main__":
+    unittest.main()
